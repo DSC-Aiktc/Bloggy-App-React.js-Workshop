@@ -2,37 +2,56 @@ import React, { Component } from "react";
 import bg from "../img/scenary.jpg";
 import axios from 'axios'
 export class BlogDetail extends Component {
-  constructor() {
-    super();
-    this.state = {
-      x: "My State Property",
-    };
+  
+
+  state = {
+    blogDetail : ""
   }
 
+  componentDidMount(){
+    const { id } = this.props.match.params
+    const url = `https://floran-blog-api.herokuapp.com/${id}`
+
+    const fetchBlogDetail = () =>{
+      axios.get(url).then(
+        (res) => {
+          this.setState({
+            blogDetail: res.data
+          })
+        }
+      ).catch(
+        err => console.log(err)
+      )
+    }
+
+    fetchBlogDetail()
+  }
+  
   render() {
-    return (
-      <div className="container mx-auto mt-5">
-        <div className="row">
-          <div className="col-12 text-center">
-            <h1 className="detailHeader">{this.state.x}</h1>
-          </div>
-          <div className="col-12 text-center">
-            <img className="detailImg" src={bg} alt="bg hai yah" />
-          </div>
-          <div className="col-12">
-            <p className="detailParagraph">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
-              voluptatum porro eveniet velit voluptate ab, esse sapiente dolorum
-              consectetur placeat quibusdam? Magnam corrupti, cumque a aliquid
-              inventore repellat suscipit amet. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Voluptatibus aliquid, ab nostrum ad
-              iste natus qui voluptatum impedit quia maiores doloremque incidunt
-              in saepe. Molestias, quisquam aliquid. Sequi, ipsum sit!
-            </p>
+
+    let blogDetail = this.state.blogDetail  
+
+    if(!blogDetail){
+      return <h1>Loading .....</h1>
+    } else {
+      return (
+        <div className="container mx-auto mt-5">
+          <div className="row">
+            <div className="col-12 text-center">
+              <h1 className="detailHeader">{blogDetail.title}</h1>
+            </div>
+            <div className="col-12 text-center">
+              <img className="detailImg" src={blogDetail.image} alt="bg hai yah" />
+            </div>
+            <div className="col-12">
+              <p className="detailParagraph">
+                {blogDetail.description}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

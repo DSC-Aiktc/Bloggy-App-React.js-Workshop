@@ -102,3 +102,9 @@ textarea{
 textarea::-webkit-scrollbar{
   width: 0rem;
 }
+
+a,
+a:hover{
+  text-decoration: none;
+  color: #212529;
+}
