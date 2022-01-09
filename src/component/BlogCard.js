@@ -1,5 +1,4 @@
 import React from "react";
-// import bg from '../img/scenary.jpg'
 
 function BlogCard(props) {
   return (
